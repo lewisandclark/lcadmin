@@ -1,0 +1,110 @@
+<style type="text/css">
+    #source_widget_id {
+        width:40px;
+    }
+    
+    #dest_widget_prefix {
+        margin-bottom:5px;
+    }
+    
+    #widget_format_example{
+        margin-top:5px;
+        color:#7E7E7E
+    }
+    
+    #update_existing{
+        margin: 0 5px 0 0px;
+    }
+    
+    #widget_id_left{
+        float:left;
+    }
+    
+    #widget_id_middle{
+        float:left;
+        margin-left: 20px;
+        margin-right: 20px;
+        font-weight: 600;
+        
+    }
+    
+    #widget_id_right{
+        float:left;
+        
+    }
+    
+    .emphasis{
+        font-weight: 500;
+    }
+    
+    .error{
+        background-color: red;
+    }
+</style>
+
+<xphp function="message_box" object="template">
+    <if var="errors" />
+    <arg id="errors"><xphp var="errors" inner="true" /></arg>
+</xphp>
+<xphp function="message_box" object="template">
+    <if var="success" />
+    <arg id="message"><xphp var="success" inner="true" /></arg>
+</xphp>
+<!-- I guess this needs to be moved the the end since the JS is included after -->
+<xphp function="json_errors" object="template">
+    <if var="errors" />
+    <arg id="errors"><xphp var="errors" inner="true" /></arg>
+</xphp>
+
+<h1>Copy Widget</h1>
+
+<p>This tool copies a widget by widget ID or widget name to all livewhale groups or a set of groups.</p>
+
+<form id="copywidget" action="/livewhale/?lcadmin_copywidget" method="post">
+    
+     <div id="sidebar">
+        <div id="fields_right">
+        <fieldset>
+            <label><h3>Additional Widget Controls</h3></label>
+            <input name="update_existing" id="update_existing" type="checkbox" <xphp function="value_checked" object="template" ><arg id="field">update_existing</arg></xphp> > Update Existing Widgets
+            <br /><br />
+            <label for="dest_groups">Apply to Groups *</label>
+            <p>List group ids comma separated or "all" for all groups.</p>
+            <input id="dest_groups" name="dest_groups" type="text" <xphp function="value_fill" object="template" ><arg id="field">dest_groups</arg><arg id="default"></arg></xphp> >
+        </fieldset>
+        </div>
+    </div>
+    
+    <div id="body">
+        <div id="fields_left">
+        <fieldset id="source_widget">
+            <label><h3>Source Widget *</h3></label>
+            <div id="widget_id_left">
+            <label for="source_widget_id">Widget ID</label>
+            <input name="source_widget_id" id="source_widget_id" type="text" <xphp function="value_fill" object="template" ><arg id="field">source_widget_id</arg></xphp> > Integer ID
+            </div>
+            <div id="widget_id_middle">- OR -</div>
+            <div id="widget_id_right">
+            <label for="source_widget_name">Widget Name</label>
+            <input name="source_widget_name" id="source_widget_name" type="text" <xphp function="value_fill" object="template" ><arg id="field">source_widget_name</arg></xphp> >  widget_unique_name
+            </div>
+        </fieldset>
+        <fieldset>
+            <label><h3>Destination Widget Options</h3></label>
+            
+            <label for="dest_widget_prefix">Dest Widget Prefix</label>
+            <input name="dest_widget_prefix" id="dest_widget_prefix" type="text" <xphp function="value_fill" object="template" ><arg id="field">dest_widget_prefix</arg></xphp> />Ex: New, Copy etc.
+            
+            <label for="dest_widget_sufix">Dest Widget Sufix *</label>
+            <input name="dest_widget_sufix"" id="dest_widget_sufix" type="text" <xphp function="value_fill" object="template" ><arg id="field">dest_widget_sufix</arg></xphp> />Ex: Past, Archived.
+            <p id="widget_format_example"><span class="emphasis">Format example:</span> prefix GroupName sufix WidgetType</p>
+        </fieldset>
+        </div>
+        </div>
+        <xphp function="submit_button" object="template">
+            <if var="simulate" />
+            <else function="approve_button" object="template" />
+        </xphp>
+    </div> 
+   
+</form>
