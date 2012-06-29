@@ -13,12 +13,13 @@ class LCAdmin { //implements the base LiveWhaleDataModule api.
     protected $NAME = 'lcadmin';
     
     //shared properties
-    protected static $LW;
-    protected static $admin;
+    protected $LW;
+    protected $admin;
     
     //debug stuff
     protected $trace_init = true;
     protected $type = 'generic';
+    protected $is_livewhale_user = false;
     
     /**
      * Handler methods
@@ -27,6 +28,10 @@ class LCAdmin { //implements the base LiveWhaleDataModule api.
         //bootstrap into livewhale and encapsulate
         global $_LW;
         $this->LW =& $_LW;
+        
+        //ensure session setup but not for login page
+        if(!isset($_SESSION['livewhale']) && $this->LW->page != 'login' && $this->LW->isLiveWhaleUser())
+            $this->is_livewhale_user=true;
         // $this->CONF is setup in childs configure
         //admin helper class
         if (isset($_SESSION['livewhale']) && isset($_SESSION['livewhale']['manage']) && isset($_SESSION['livewhale']['manage']['username']) && !empty($_SESSION['livewhale']['manage']['username'])){

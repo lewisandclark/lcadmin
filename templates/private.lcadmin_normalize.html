@@ -1,0 +1,17 @@
+<h1>Normalize Data</h1>
+
+<xphp function="message_box" object="template">
+    <if var="job_results" />
+    <arg id="message"><xphp var="job_results" inner="true" /></arg>
+</xphp>
+
+<form id="normalize_form" action="/livewhale/?lcadmin_normalize" method="post">
+
+<div id="body">
+        <div id="fields_left">
+        <fieldset>
+            <p><input type="checkbox" name="jobs[]" value="clean_slashes" /> Clean pages with multiple ////</p>
+        </fieldset>
+        
+        <button id="submit_button" >Run Tasks</button>
+</form>

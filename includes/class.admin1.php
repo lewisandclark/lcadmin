@@ -3,13 +3,7 @@
 class Admin1 {
     
     //list of super admins
-    private $super = array(
-        'mckelvey',
-        'grether',
-        'nickshobe',
-        'lsiulagi',
-        'whitewhale'
-        );
+    private $super = array();
     
     private $user,$group,$LW,$admin;
     
@@ -19,6 +13,8 @@ class Admin1 {
         $this->group = $group;
         $this->admin = $is_admin == '1' ? true : false;
         $this->LW = $LW;
+        include('admin_config.php');
+        $this->super = $super; //define an array like super = array('username','username2') of super admins.
         }
 
     private $recent = '3 months ago';

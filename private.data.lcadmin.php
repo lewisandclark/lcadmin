@@ -3,9 +3,9 @@
 $_LW->REGISTERED_MODULES['lcadmin']=array(
    'title'=>'LC Admin',
   'data'=>array('link'=>'?lcadmin_page','order'=>100,
-		'managers'=>array('lcadmin_page','lcadmin_copywidget'),
+		'managers'=>array('lcadmin_page','lcadmin_copywidget','lcadmin_envdump','lcadmin_normalize'),
     'editors'=>array(),
-		'subnav'=>array(array('title'=>'Short Cuts','url'=>'/livewhale/?lcadmin_page','id'=>'page_lcadmin_page'),array('title'=>'Copy Widgets','url'=>'/livewhale/?lcadmin_copywidget','id'=>'page_lcadmin_copywidget'))
+		'subnav'=>array(array('title'=>'Short Cuts','url'=>'/livewhale/?lcadmin_page','id'=>'page_lcadmin_page'),array('title'=>'Copy Widgets','url'=>'/livewhale/?lcadmin_copywidget','id'=>'page_lcadmin_copywidget'),array('title'=>'Normalize Data','url'=>'/livewhale/?lcadmin_normalize','id'=>'page_lcadmin_normalize'),array('title'=>'Env Dump','url'=>'/livewhale/?lcadmin_envdump','id'=>'page_lcadmin_envdump'))
 		), //array('title'=>'Submenu Item','url'=>'/livewhale/?foo_sub','id'=>'page_foo_sub')
   'flags'=>array('has_own_tab','is_admin_only'),
    'handlers'=>array('onLoad','onActivate','onSession','onManager','onManagerSubmit','onEditor','onEditorSubmit')
@@ -46,6 +46,26 @@ class LiveWhaleDataLcadmin extends DataLCAdmin{
         $GLOBALS['title'] = 'Copy Widgets';
     }
     
+    protected function lcadmin_envdump(){
+        $GLOBALS['title'] = 'Env Dump';
+        print_r($_SESSION['livewhale']);
+    }
+    
+    protected function lcadmin_normalize(){
+        $GLOBALS['title'] = 'Env Dump';
+        
+    }
+    
+    protected function lcadmin_normalize_submit(){
+        $GLOBALS['title'] = 'Copy Widgets';
+        $GLOBALS['job_results'] = print_r($_POST, true);
+        
+        //external plugins loaded here;
+        //if(isset($_POST['jobs']))
+        //    if(in_array('clean_slashes',$_POST['jobs'])){
+        //        include_once($_LW->INCLUDES_DIR_PATH.'/client/modules/lcadmin/includes/class.batchCleanSlashes.php');
+        //    }
+    }
     /*
      * Copywidget sumbit is the callback for the manager submit on the copywidget page
      */
